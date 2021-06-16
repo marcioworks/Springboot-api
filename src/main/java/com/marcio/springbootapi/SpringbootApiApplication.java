@@ -8,9 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.marcio.springbootapi.domain.Category;
+import com.marcio.springbootapi.domain.City;
 import com.marcio.springbootapi.domain.Product;
+import com.marcio.springbootapi.domain.State;
 import com.marcio.springbootapi.repositories.CategoryRepository;
+import com.marcio.springbootapi.repositories.CityRepository;
 import com.marcio.springbootapi.repositories.ProductRepository;
+import com.marcio.springbootapi.repositories.StateRepository;
 
 @SpringBootApplication
 public class SpringbootApiApplication implements CommandLineRunner {
@@ -19,6 +23,10 @@ public class SpringbootApiApplication implements CommandLineRunner {
 	private CategoryRepository categoryRepo;
 	@Autowired
 	private ProductRepository productRepo;
+	@Autowired
+	private StateRepository stateRepo;
+	@Autowired
+	private CityRepository cityRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApiApplication.class, args);
@@ -43,6 +51,19 @@ public class SpringbootApiApplication implements CommandLineRunner {
 		
 		categoryRepo.saveAll(Arrays.asList(cat1,cat2));
 		productRepo.saveAll(Arrays.asList(p1,p2,p3));
+		
+		State stt1 = new State(null, "Minas Gerais");
+		State stt2 = new State(null, "São Paulo");
+		
+		City ct1 = new City(null, "Uberlândia", stt1);
+		City ct2 = new City(null, "São paulo", stt2);
+		City ct3 = new City(null, "Campinas", stt2);
+		
+		stt1.getCities().addAll(Arrays.asList(ct1));
+		stt2.getCities().addAll(Arrays.asList(ct2,ct3));
+		
+		stateRepo.saveAll(Arrays.asList(stt1,stt2));
+		cityRepo.saveAll(Arrays.asList(ct1,ct2,ct3));
 	}
 
 }
