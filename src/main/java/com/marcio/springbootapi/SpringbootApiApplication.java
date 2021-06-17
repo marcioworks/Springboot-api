@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.marcio.springbootapi.domain.Address;
 import com.marcio.springbootapi.domain.Category;
 import com.marcio.springbootapi.domain.City;
+import com.marcio.springbootapi.domain.Client;
 import com.marcio.springbootapi.domain.Product;
 import com.marcio.springbootapi.domain.State;
+import com.marcio.springbootapi.domain.enums.ClientType;
+import com.marcio.springbootapi.repositories.AddressRepository;
 import com.marcio.springbootapi.repositories.CategoryRepository;
 import com.marcio.springbootapi.repositories.CityRepository;
+import com.marcio.springbootapi.repositories.ClientRepository;
 import com.marcio.springbootapi.repositories.ProductRepository;
 import com.marcio.springbootapi.repositories.StateRepository;
 
@@ -27,6 +32,10 @@ public class SpringbootApiApplication implements CommandLineRunner {
 	private StateRepository stateRepo;
 	@Autowired
 	private CityRepository cityRepo;
+	@Autowired
+	private ClientRepository clientRepo;
+	@Autowired
+	private AddressRepository addressRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApiApplication.class, args);
@@ -64,6 +73,20 @@ public class SpringbootApiApplication implements CommandLineRunner {
 		
 		stateRepo.saveAll(Arrays.asList(stt1,stt2));
 		cityRepo.saveAll(Arrays.asList(ct1,ct2,ct3));
+		
+		Client cl1 = new Client(null, "Marcio Silva", "marcio@teste.com", "02222222123", ClientType.PHYSICALPERSON);
+		
+		cl1.getPhones().addAll(Arrays.asList("85998989898","85987878787"));
+		
+		Address add1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220824", ct1, cl1);
+		Address add2 = new Address(null, "Avenida Matos", "105", "sala 800", "Centro", "38777012", ct2, cl1);
+		
+		cl1.getAddresses().addAll(Arrays.asList(add1,add2));
+		
+		clientRepo.saveAll(Arrays.asList(cl1));
+		addressRepo.saveAll(Arrays.asList(add1,add2));
+		
+		
 	}
 
 }
