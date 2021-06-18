@@ -2,6 +2,8 @@ package com.marcio.springbootapi.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,26 +15,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity(name = "TB_Order")
-public class Order implements Serializable{
+public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date instant;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
-	
-	public Order() {}
+
+	private Set<OrderedItem> itens = new HashSet<>();
+
+	public Order() {
+	}
 
 	public Order(Integer id, Date instant, Client client, Address deliveryAddress) {
 		super();
@@ -40,7 +45,7 @@ public class Order implements Serializable{
 		this.instant = instant;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
-		
+
 	}
 
 	public Integer getId() {
@@ -83,6 +88,14 @@ public class Order implements Serializable{
 		this.payment = payment;
 	}
 
+	public Set<OrderedItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<OrderedItem> itens) {
+		this.itens = itens;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -107,7 +120,5 @@ public class Order implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
