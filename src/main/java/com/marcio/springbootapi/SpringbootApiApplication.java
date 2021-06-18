@@ -1,5 +1,6 @@
 package com.marcio.springbootapi;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.marcio.springbootapi.domain.Address;
+import com.marcio.springbootapi.domain.BilletPayment;
+import com.marcio.springbootapi.domain.CardPayment;
 import com.marcio.springbootapi.domain.Category;
 import com.marcio.springbootapi.domain.City;
 import com.marcio.springbootapi.domain.Client;
+import com.marcio.springbootapi.domain.Order;
+import com.marcio.springbootapi.domain.Payment;
 import com.marcio.springbootapi.domain.Product;
 import com.marcio.springbootapi.domain.State;
 import com.marcio.springbootapi.domain.enums.ClientType;
+import com.marcio.springbootapi.domain.enums.PaymentState;
 import com.marcio.springbootapi.repositories.AddressRepository;
 import com.marcio.springbootapi.repositories.CategoryRepository;
 import com.marcio.springbootapi.repositories.CityRepository;
 import com.marcio.springbootapi.repositories.ClientRepository;
+import com.marcio.springbootapi.repositories.OrderRepository;
+import com.marcio.springbootapi.repositories.PaymentRepository;
 import com.marcio.springbootapi.repositories.ProductRepository;
 import com.marcio.springbootapi.repositories.StateRepository;
 
@@ -36,6 +44,10 @@ public class SpringbootApiApplication implements CommandLineRunner {
 	private ClientRepository clientRepo;
 	@Autowired
 	private AddressRepository addressRepo;
+	@Autowired
+	private OrderRepository orderRepo;
+	@Autowired
+	private PaymentRepository paymentRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApiApplication.class, args);
@@ -85,6 +97,25 @@ public class SpringbootApiApplication implements CommandLineRunner {
 		
 		clientRepo.saveAll(Arrays.asList(cl1));
 		addressRepo.saveAll(Arrays.asList(add1,add2));
+		
+		SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), cl1, add1);
+		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), cl1, add2);
+		
+		Payment paym1 = new CardPayment(null, PaymentState.PAYED, order1, 6);
+		order1.setPayment(paym1);
+		
+		Payment paym2 = new BilletPayment(null, PaymentState.PENDING, order2, sdf.parse("20/10/2017 00:00"), null);
+		order2.setPayment(paym2);
+		
+		cl1.getOrders().addAll(Arrays.asList(order1,order2));
+		
+		orderRepo.saveAll(Arrays.asList(order1,order2));
+		paymentRepo.saveAll(Arrays.asList(paym1, paym2));
+		
+		
+		
 		
 		
 	}

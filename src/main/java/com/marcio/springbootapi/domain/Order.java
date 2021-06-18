@@ -3,14 +3,34 @@ package com.marcio.springbootapi.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+@Entity(name = "TB_Order")
 public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date instant;
 	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
 	private Client client;
 	
+	@ManyToOne
+	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
+	private Payment payment;
 	
 	public Order() {}
 
@@ -20,6 +40,7 @@ public class Order implements Serializable{
 		this.instant = instant;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
+		
 	}
 
 	public Integer getId() {
@@ -52,6 +73,14 @@ public class Order implements Serializable{
 
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	@Override

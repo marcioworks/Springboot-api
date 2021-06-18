@@ -1,7 +1,10 @@
 package com.marcio.springbootapi.domain;
 
+import javax.persistence.Entity;
+
 import com.marcio.springbootapi.domain.enums.PaymentState;
 
+@Entity
 public class CardPayment extends Payment{
 	private static final long serialVersionUID = 1L;
 	

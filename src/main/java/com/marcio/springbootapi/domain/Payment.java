@@ -2,13 +2,28 @@ package com.marcio.springbootapi.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+
 import com.marcio.springbootapi.domain.enums.PaymentState;
 
-public class Payment implements Serializable{
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Payment implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
+	@Id
 	private Integer id;
 	private Integer state;
 	
+	@OneToOne
+	@JoinColumn(name = "order_id")
+	@MapsId
 	private Order order;
 	
 	public Payment() {}

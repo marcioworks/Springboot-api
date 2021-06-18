@@ -2,8 +2,11 @@ package com.marcio.springbootapi.domain;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import com.marcio.springbootapi.domain.enums.PaymentState;
 
+@Entity
 public class BilletPayment extends Payment {
 	private static final long serialVersionUID = 1L;
 	private Date dueDate;
