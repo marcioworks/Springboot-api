@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marcio.springbootapi.domain.enums.ClientType;
 
 @Entity
@@ -30,7 +29,7 @@ public class Client implements Serializable {
 	private String cpfOrCnpj;
 	private Integer type;
 
-	@JsonManagedReference
+	
 	@OneToMany(mappedBy = "client")
 	private List<Address> addresses = new ArrayList<>();
 
