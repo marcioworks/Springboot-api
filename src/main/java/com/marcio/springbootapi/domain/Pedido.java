@@ -31,6 +31,7 @@ public class Pedido implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Payment Payment;
 
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
