@@ -14,8 +14,9 @@ import com.marcio.springbootapi.domain.CardPayment;
 import com.marcio.springbootapi.domain.Category;
 import com.marcio.springbootapi.domain.City;
 import com.marcio.springbootapi.domain.Client;
-import com.marcio.springbootapi.domain.Order;
+import com.marcio.springbootapi.domain.ItemPedido;
 import com.marcio.springbootapi.domain.Payment;
+import com.marcio.springbootapi.domain.Pedido;
 import com.marcio.springbootapi.domain.Product;
 import com.marcio.springbootapi.domain.State;
 import com.marcio.springbootapi.domain.enums.ClientType;
@@ -24,6 +25,7 @@ import com.marcio.springbootapi.repositories.AddressRepository;
 import com.marcio.springbootapi.repositories.CategoryRepository;
 import com.marcio.springbootapi.repositories.CityRepository;
 import com.marcio.springbootapi.repositories.ClientRepository;
+import com.marcio.springbootapi.repositories.ItemPedidoRepository;
 import com.marcio.springbootapi.repositories.OrderRepository;
 import com.marcio.springbootapi.repositories.PaymentRepository;
 import com.marcio.springbootapi.repositories.ProductRepository;
@@ -48,6 +50,8 @@ public class SpringbootApiApplication implements CommandLineRunner {
 	private OrderRepository orderRepo;
 	@Autowired
 	private PaymentRepository paymentRepo;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootApiApplication.class, args);
@@ -100,8 +104,8 @@ public class SpringbootApiApplication implements CommandLineRunner {
 		
 		SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), cl1, add1);
-		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), cl1, add2);
+		Pedido order1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cl1, add1);
+		Pedido order2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cl1, add2);
 		
 		Payment paym1 = new CardPayment(null, PaymentState.PAYED, order1, 6);
 		order1.setPayment(paym1);
@@ -113,6 +117,19 @@ public class SpringbootApiApplication implements CommandLineRunner {
 		
 		orderRepo.saveAll(Arrays.asList(order1,order2));
 		paymentRepo.saveAll(Arrays.asList(paym1, paym2));
+		
+		ItemPedido itp1 = new ItemPedido(order1, p1, 0.00, 1, 2000.0);
+		ItemPedido itp2 = new ItemPedido(order1, p3, 0.00, 2, 80.0);
+		ItemPedido itp3 = new ItemPedido(order2, p2, 100.00, 1, 800.0);
+		
+		order1.getItens().addAll(Arrays.asList(itp1,itp2));
+		order2.getItens().addAll(Arrays.asList(itp3));
+		
+		p1.getItens().addAll(Arrays.asList(itp1));
+		p2.getItens().addAll(Arrays.asList(itp3));
+		p3.getItens().addAll(Arrays.asList(itp2));
+
+		itemPedidoRepository.saveAll(Arrays.asList(itp1,itp2,itp3));
 		
 		
 		

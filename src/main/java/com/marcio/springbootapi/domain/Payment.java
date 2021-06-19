@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcio.springbootapi.domain.enums.PaymentState;
 
 @Entity
@@ -21,18 +22,19 @@ public abstract class Payment implements Serializable{
 	private Integer id;
 	private Integer state;
 	
+	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name = "order_id")
+	@JoinColumn(name = "pedido_id")
 	@MapsId
-	private Order order;
+	private Pedido pedido;
 	
 	public Payment() {}
 
-	public Payment(Integer id, PaymentState state, Order order) {
+	public Payment(Integer id, PaymentState state, Pedido order) {
 		super();
 		this.id = id;
 		this.state = state.getCod();
-		this.order = order;
+		this.pedido = order;
 	}
 
 	public Integer getId() {
@@ -51,12 +53,13 @@ public abstract class Payment implements Serializable{
 		this.state = state.getCod();
 	}
 
-	public Order getOrder() {
-		return order;
+	@JsonIgnore
+	public Pedido getOrder() {
+		return pedido;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrder(Pedido order) {
+		this.pedido = order;
 	}
 
 	@Override
