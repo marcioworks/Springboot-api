@@ -12,16 +12,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-@Entity(name = "TB_Order")
-public class Order implements Serializable {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Date instant;
+
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	private Date instante;
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
+	private Payment Payment;
 
 	@ManyToOne
 	@JoinColumn(name = "client_id")
@@ -31,21 +39,26 @@ public class Order implements Serializable {
 	@JoinColumn(name = "delivery_address_id")
 	private Address deliveryAddress;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
-	private Payment payment;
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
 
-	private Set<OrderedItem> itens = new HashSet<>();
-
-	public Order() {
+	public Pedido() {
 	}
 
-	public Order(Integer id, Date instant, Client client, Address deliveryAddress) {
+	public Pedido(Integer id, Date instante, Client client, Address deliveryAddress) {
 		super();
 		this.id = id;
-		this.instant = instant;
+		this.instante = instante;
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
+	}
 
+	public double getValorTotal() {
+		double soma = 0.0;
+		for (ItemPedido ip : itens) {
+			soma = soma + ip.getSubTotal();
+		}
+		return soma;
 	}
 
 	public Integer getId() {
@@ -56,43 +69,43 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
-	public Date getInstant() {
-		return instant;
+	public Date getInstante() {
+		return instante;
 	}
 
-	public void setInstant(Date instant) {
-		this.instant = instant;
+	public void setInstante(Date instante) {
+		this.instante = instante;
 	}
 
-	public Client getClient() {
+	public Payment getPayment() {
+		return Payment;
+	}
+
+	public void setPayment(Payment Payment) {
+		this.Payment = Payment;
+	}
+
+	public Client getCliente() {
 		return client;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setCliente(Client cliente) {
+		this.client = cliente;
 	}
 
 	public Address getDeliveryAddress() {
 		return deliveryAddress;
 	}
 
-	public void setDeliveryAddress(Address deliveryAddress) {
+	public void setdeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
 
-	public Payment getPayment() {
-		return payment;
-	}
-
-	public void setPayment(Payment payment) {
-		this.payment = payment;
-	}
-
-	public Set<OrderedItem> getItens() {
+	public Set<ItemPedido> getItens() {
 		return itens;
 	}
 
-	public void setItens(Set<OrderedItem> itens) {
+	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
 	}
 
@@ -112,7 +125,7 @@ public class Order implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		Pedido other = (Pedido) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

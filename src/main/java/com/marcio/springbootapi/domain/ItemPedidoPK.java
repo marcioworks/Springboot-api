@@ -4,42 +4,41 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class OrderedItemPk implements Serializable {
+public class ItemPedidoPK implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@ManyToOne
+	@JoinColumn(name = "pedido_id")
+	private Pedido pedido;
 
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-	
-	@ManyToOne
-	@JoinTable(name="order_id")
-	private Order order;
 
-	public Product getProduct() {
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
+	public Product getProduto() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setProduct(Product produto) {
+		this.product = produto;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
 		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		return result;
 	}
@@ -52,11 +51,11 @@ public class OrderedItemPk implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderedItemPk other = (OrderedItemPk) obj;
-		if (order == null) {
-			if (other.order != null)
+		ItemPedidoPK other = (ItemPedidoPK) obj;
+		if (pedido == null) {
+			if (other.pedido != null)
 				return false;
-		} else if (!order.equals(other.order))
+		} else if (!pedido.equals(other.pedido))
 			return false;
 		if (product == null) {
 			if (other.product != null)
@@ -65,7 +64,5 @@ public class OrderedItemPk implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
 
 }

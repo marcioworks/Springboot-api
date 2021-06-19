@@ -13,7 +13,7 @@ public class CardPayment extends Payment{
 	public CardPayment() {
 	}
 	
-	public CardPayment(Integer id, PaymentState state, Order order,Integer numberOfInstallments) {
+	public CardPayment(Integer id, PaymentState state, Pedido order,Integer numberOfInstallments) {
 		super(id, state, order);
 		this.numberOfInstallments = numberOfInstallments;
 	}

@@ -14,8 +14,8 @@ import com.marcio.springbootapi.domain.CardPayment;
 import com.marcio.springbootapi.domain.Category;
 import com.marcio.springbootapi.domain.City;
 import com.marcio.springbootapi.domain.Client;
-import com.marcio.springbootapi.domain.Order;
 import com.marcio.springbootapi.domain.Payment;
+import com.marcio.springbootapi.domain.Pedido;
 import com.marcio.springbootapi.domain.Product;
 import com.marcio.springbootapi.domain.State;
 import com.marcio.springbootapi.domain.enums.ClientType;
@@ -100,8 +100,8 @@ public class SpringbootApiApplication implements CommandLineRunner {
 		
 		SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), cl1, add1);
-		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), cl1, add2);
+		Pedido order1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cl1, add1);
+		Pedido order2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cl1, add2);
 		
 		Payment paym1 = new CardPayment(null, PaymentState.PAYED, order1, 6);
 		order1.setPayment(paym1);
