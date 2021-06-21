@@ -2,6 +2,7 @@ package com.marcio.springbootapi.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marcio.springbootapi.domain.Category;
+import com.marcio.springbootapi.dtos.CategoryDto;
 import com.marcio.springbootapi.services.CategoryService;
 
 @RestController
@@ -27,11 +29,12 @@ public class CategoryResource {
 	private CategoryService categoryService;
 
 	@GetMapping
-	public ResponseEntity<List<Category>> list() {
+	public ResponseEntity<List<CategoryDto>> list() {
 		
 		List<Category> categories = categoryService.getCategories();
+		List<CategoryDto> list = categories.stream().map(x -> new CategoryDto(x)).collect(Collectors.toList());
 		
-		return ResponseEntity.ok().body(categories);
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
