@@ -29,11 +29,8 @@ public class CategoryResource {
 	@GetMapping
 	public List<Category> list() {
 		
-		Category cat1 = new Category(1, "Eletronics");
-		Category cat2 = new Category(2, "Sports");
+		List<Category> categories = categoryService.getCategories();
 		
-		List<Category> categories = new ArrayList<>();
-		categories.addAll(Arrays.asList(cat1,cat2));
 		return categories;
 	}
 	

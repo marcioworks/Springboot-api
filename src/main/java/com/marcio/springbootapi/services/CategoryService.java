@@ -1,5 +1,6 @@
 package com.marcio.springbootapi.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ public class CategoryService {
 
 	@Autowired
 	private CategoryRepository repo;
+	
+	public List<Category> getCategories(){
+		return repo.findAll();
+	}
 	
 	public Category getById(Integer id) {
 		Optional<Category> category = repo.findById(id);
