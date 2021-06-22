@@ -2,16 +2,24 @@ package com.marcio.springbootapi.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.marcio.springbootapi.domain.Category;
 
 public class CategoryDto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
+
+	@NotEmpty(message = "field cant be empty.")
+	@Length(min = 5, max = 80, message = "field must havebetween 5 and 80 characters")
 	private String name;
-	
-	public CategoryDto() {}
-	
+
+	public CategoryDto() {
+	}
+
 	public CategoryDto(Category obj) {
 		id = obj.getId();
 		name = obj.getName();
@@ -32,6 +40,5 @@ public class CategoryDto implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 }

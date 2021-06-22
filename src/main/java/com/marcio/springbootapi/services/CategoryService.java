@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.marcio.springbootapi.domain.Category;
+import com.marcio.springbootapi.dtos.CategoryDto;
 import com.marcio.springbootapi.repositories.CategoryRepository;
 import com.marcio.springbootapi.services.exceptions.DataIntegrityException;
 import com.marcio.springbootapi.services.exceptions.ObjectNotFoundException;
@@ -53,4 +54,7 @@ public class CategoryService {
 		return repo.findAll(pageRequest);
 	}
 	
+	public Category fromDto(CategoryDto obj) {
+		return new Category(obj.getId(),obj.getName());
+	}
 }
