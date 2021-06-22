@@ -15,25 +15,26 @@ import com.marcio.springbootapi.domain.enums.PaymentState;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Payment implements Serializable{
+public abstract class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private Integer id;
 	private Integer state;
-	
+
 	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
 	private Pedido pedido;
-	
-	public Payment() {}
+
+	public Payment() {
+	}
 
 	public Payment(Integer id, PaymentState state, Pedido order) {
 		super();
 		this.id = id;
-		this.state = state.getCod();
+		this.state = (state == null) ? null : state.getCod();
 		this.pedido = order;
 	}
 
@@ -86,7 +87,5 @@ public abstract class Payment implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
