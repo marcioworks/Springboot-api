@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -29,14 +30,13 @@ public class Client implements Serializable {
 	private String cpfOrCnpj;
 	private Integer type;
 
-	
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 
 	@ElementCollection
 	@CollectionTable(name = "phones")
 	private Set<String> phones = new HashSet<>();
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Pedido> orders = new ArrayList<>();
@@ -108,7 +108,7 @@ public class Client implements Serializable {
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
 	}
-	
+
 	public List<Pedido> getOrders() {
 		return orders;
 	}
@@ -141,7 +141,5 @@ public class Client implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 
 }

@@ -65,7 +65,7 @@ public class ClientService {
 		try {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("You cant delete a Clinet that have relations!");
+			throw new DataIntegrityException("You cant delete a Client that have Orders!");
 		}
 	}
 
