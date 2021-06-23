@@ -9,9 +9,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.marcio.springbootapi.domain.Address;
+import com.marcio.springbootapi.domain.City;
 import com.marcio.springbootapi.domain.Client;
+import com.marcio.springbootapi.domain.enums.ClientType;
 import com.marcio.springbootapi.dtos.ClientDto;
+import com.marcio.springbootapi.dtos.NewClientDto;
+import com.marcio.springbootapi.repositories.AddressRepository;
 import com.marcio.springbootapi.repositories.ClientRepository;
 import com.marcio.springbootapi.services.exceptions.DataIntegrityException;
 import com.marcio.springbootapi.services.exceptions.ObjectNotFoundException;
@@ -21,6 +27,8 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository repo;
+	@Autowired
+	private AddressRepository addressRepo;
 
 	public List<Client> getClients() {
 		return repo.findAll();
@@ -31,16 +39,25 @@ public class ClientService {
 		return client.orElseThrow(() -> new ObjectNotFoundException("Client not found! id: " + Client.class.getName()));
 	}
 
+	@Transactional
+	public Client insert(Client obj) {
+		obj.setId(null);
+		obj = repo.save(obj);
+		addressRepo.saveAll(obj.getAddresses());
+
+		return obj;
+	}
+
 	public Client update(Client obj) {
 		Client newClient = getById(obj.getId());
-		updateData(newClient,obj);
+		updateData(newClient, obj);
 		return repo.save(newClient);
 	}
 
 	private void updateData(Client newClient, Client client) {
 		newClient.setName(client.getName());
 		newClient.setEmail(client.getEmail());
-		
+
 	}
 
 	public void delete(Integer id) {
@@ -59,6 +76,24 @@ public class ClientService {
 
 	public Client fromDto(ClientDto obj) {
 		return new Client(obj.getId(), obj.getName(), obj.getEmail(), null, null);
+	}
+
+	public Client fromDto(NewClientDto obj) {
+		Client cli = new Client(null, obj.getName(), obj.getEmail(), obj.getCpfOrCnpj(),
+				ClientType.toEnum(obj.getType()));
+		City city = new City(obj.getCityId(), null, null);
+		Address address = new Address(null, obj.getStreet(), obj.getNumber(), obj.getComplement(), obj.getNeighborood(),
+				obj.getZipcode(), city, cli);
+		cli.getAddresses().add(address);
+		cli.getPhones().add(obj.getPhone1());
+		if (obj.getPhone2() != null) {
+			cli.getPhones().add(obj.getPhone2());
+		}
+		if (obj.getPhone3() != null) {
+			cli.getPhones().add(obj.getPhone3());
+		}
+
+		return cli;
 	}
 
 }
