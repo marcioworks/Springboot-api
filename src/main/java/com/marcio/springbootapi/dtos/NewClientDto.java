@@ -2,20 +2,38 @@ package com.marcio.springbootapi.dtos;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.marcio.springbootapi.services.validations.ClientInsert;
+
+@ClientInsert
 public class NewClientDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message = "Field email cant be empty.")
+	@Length(min= 5,max= 120,message = "Field name should have between 5 and 120 Characters")
 	private String name;
+	
+	@NotEmpty(message = "Field email cant be empty.")
+	@Email(message = "email invalid")
 	private String email;
+	@NotEmpty(message = "Field cant be empty.")
 	private String cpfOrCnpj;
 	private Integer type;
 
+	@NotEmpty(message = "Field street cant be empty.")
 	private String street;
+	@NotEmpty(message = "Field number cant be empty.")
 	private String number;
 	private String complement;
 	private String neighborood;
+	@NotEmpty(message = "Field zipcode cant be empty.")
 	private String zipcode;
 
+	@NotEmpty(message = "Field Phone1 cant be empty.")
 	private String phone1;
 	private String phone2;
 	private String phone3;
