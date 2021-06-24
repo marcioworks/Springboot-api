@@ -2,15 +2,15 @@ package com.marcio.springbootapi.resources.exceptions;
 
 import java.io.Serializable;
 
-public class FieldMesage implements Serializable{
+public class FieldMessage implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private String fieldMessage;
 	private String message;
 	
-	public FieldMesage() {}
+	public FieldMessage() {}
 
-	public FieldMesage(String fieldMessage, String message) {
+	public FieldMessage(String fieldMessage, String message) {
 		super();
 		this.fieldMessage = fieldMessage;
 		this.message = message;
