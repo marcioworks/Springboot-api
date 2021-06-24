@@ -12,28 +12,31 @@ import com.marcio.springbootapi.services.validations.ClientInsert;
 @ClientInsert
 public class NewClientDto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@NotEmpty(message = "Field name cant be empty.")
 	@Length(min = 5, max = 120, message = " the field name must have between 5 and 120 characters!")
 	private String name;
-	
+
 	@NotEmpty(message = "Field email cant be empty.")
 	@Email
+
+	@NotEmpty(message = "Field email cant be empty.")
+	@Email(message = "email invalid")
 	private String email;
 	@NotEmpty(message = "Field cant be empty.")
 	private String cpfOrCnpj;
 	private Integer type;
 
-	@NotEmpty(message = "Field name cant be empty.")
+	@NotEmpty(message = "Field street cant be empty.")
 	private String street;
-	@NotEmpty(message = "Field name cant be empty.")
+	@NotEmpty(message = "Field number cant be empty.")
 	private String number;
 	private String complement;
 	private String neighborood;
-	@NotEmpty(message = "Field name cant be empty.")
+	@NotEmpty(message = "Field zipcode cant be empty.")
 	private String zipcode;
 
-	@NotEmpty(message = "Field name cant be empty.")
+	@NotEmpty(message = "Field Phone1 cant be empty.")
 	private String phone1;
 	private String phone2;
 	private String phone3;
