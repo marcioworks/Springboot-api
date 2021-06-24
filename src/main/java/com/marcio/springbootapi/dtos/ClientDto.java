@@ -8,7 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.marcio.springbootapi.domain.Client;
+import com.marcio.springbootapi.services.validations.ClientUpdate;
 
+@ClientUpdate
 public class ClientDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
