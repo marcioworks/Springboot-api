@@ -1,8 +1,11 @@
 package com.marcio.springbootapi.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -135,5 +138,29 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Order number: ");
+		builder.append(getId());
+		builder.append(", order Date: ");
+		builder.append(sdf.format(getInstante()));
+		builder.append(", Client: ");
+		builder.append(getCliente().getName());
+		builder.append(", Payment Status: ");
+		builder.append(getPayment().getState().getDescription());
+		builder.append("\nDetails:\n");
+		for(ItemPedido ip: getItens()) {
+			builder.append(ip.toString());
+		}
+		builder.append("Total value: ");
+		builder.append(nf.format(getValorTotal()));
+		return builder.toString();
+	}
+	
+	
 
 }
