@@ -16,7 +16,7 @@
 	<description>spring boot with mongoDb</description>
 	<properties>
 		<java.version>11</java.version>
-		<start-class>com.marcio.springbootapi</start-class>
+		<start-class>com.example.SpringbootApiApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -78,7 +78,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>br.com.curso.mc.Application</mainClass>
+					<mainClass>com.example.SpringbootApiApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
