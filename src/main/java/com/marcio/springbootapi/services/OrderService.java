@@ -65,7 +65,7 @@ public class OrderService {
 		}
 		
 		itemRepo.saveAll(obj.getItens());
-		mailService.sendOrderConfirmationEmail(obj);
+		mailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 		
 	}
