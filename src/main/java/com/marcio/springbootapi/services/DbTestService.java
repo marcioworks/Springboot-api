@@ -110,7 +110,7 @@ public class DbTestService {
 		stateRepo.saveAll(Arrays.asList(stt1, stt2));
 		cityRepo.saveAll(Arrays.asList(ct1, ct2, ct3));
 
-		Client cl1 = new Client(null, "Marcio Silva", "marcio@teste.com", "02222222123", ClientType.PHYSICALPERSON);
+		Client cl1 = new Client(null, "Marcio Silva", "marcioadsworks@gmail.com", "02222222123", ClientType.PHYSICALPERSON);
 
 		cl1.getPhones().addAll(Arrays.asList("85998989898", "85987878787"));
 
