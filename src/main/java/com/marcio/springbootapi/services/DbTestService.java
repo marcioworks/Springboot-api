@@ -21,6 +21,7 @@ import com.marcio.springbootapi.domain.Product;
 import com.marcio.springbootapi.domain.State;
 import com.marcio.springbootapi.domain.enums.ClientType;
 import com.marcio.springbootapi.domain.enums.PaymentState;
+import com.marcio.springbootapi.domain.enums.Profile;
 import com.marcio.springbootapi.repositories.AddressRepository;
 import com.marcio.springbootapi.repositories.CategoryRepository;
 import com.marcio.springbootapi.repositories.CityRepository;
@@ -113,17 +114,22 @@ public class DbTestService {
 		stateRepo.saveAll(Arrays.asList(stt1, stt2));
 		cityRepo.saveAll(Arrays.asList(ct1, ct2, ct3));
 
-		Client cl1 = new Client(null, "Marcio Silva", "marcioadsworks@gmail.com", "02222222123", ClientType.PHYSICALPERSON,pe.encode("123"));
-
+		Client cl1 = new Client(null, "Marcio Silva", "marcioadsworks@gmail.com", "13669137017", ClientType.PHYSICALPERSON,pe.encode("123"));
 		cl1.getPhones().addAll(Arrays.asList("85998989898", "85987878787"));
 
+		Client cl2 = new Client(null, "Marcio santos", "marcioworkar@gmail.com", "55161957050", ClientType.PHYSICALPERSON,pe.encode("123"));
+		cl2.addProfile(Profile.ADMIN);
+		cl1.getPhones().addAll(Arrays.asList("85998989898", "85987878787"));
+		
 		Address add1 = new Address(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220824", ct1, cl1);
 		Address add2 = new Address(null, "Avenida Matos", "105", "sala 800", "Centro", "38777012", ct2, cl1);
+		Address add3 = new Address(null, "Avenida Floriano", "2045", null, "Centro", "38777012", ct2, cl2);
 
 		cl1.getAddresses().addAll(Arrays.asList(add1, add2));
+		cl2.getAddresses().addAll(Arrays.asList(add3));
 
-		clientRepo.saveAll(Arrays.asList(cl1));
-		addressRepo.saveAll(Arrays.asList(add1, add2));
+		clientRepo.saveAll(Arrays.asList(cl1,cl2));
+		addressRepo.saveAll(Arrays.asList(add1, add2,add3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
