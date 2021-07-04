@@ -25,7 +25,11 @@ public class NewClientDto implements Serializable {
 	private String email;
 	@NotEmpty(message = "Field cant be empty.")
 	private String cpfOrCnpj;
+	
 	private Integer type;
+	
+	@NotEmpty(message = "Field password cant be empty.")
+	private String password;
 
 	@NotEmpty(message = "Field street cant be empty.")
 	private String street;
@@ -148,6 +152,14 @@ public class NewClientDto implements Serializable {
 
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
