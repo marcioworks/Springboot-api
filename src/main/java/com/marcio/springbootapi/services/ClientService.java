@@ -16,10 +16,13 @@ import com.marcio.springbootapi.domain.Address;
 import com.marcio.springbootapi.domain.City;
 import com.marcio.springbootapi.domain.Client;
 import com.marcio.springbootapi.domain.enums.ClientType;
+import com.marcio.springbootapi.domain.enums.Profile;
 import com.marcio.springbootapi.dtos.ClientDto;
 import com.marcio.springbootapi.dtos.NewClientDto;
 import com.marcio.springbootapi.repositories.AddressRepository;
 import com.marcio.springbootapi.repositories.ClientRepository;
+import com.marcio.springbootapi.security.UserSS;
+import com.marcio.springbootapi.services.exceptions.AuthorizationException;
 import com.marcio.springbootapi.services.exceptions.DataIntegrityException;
 import com.marcio.springbootapi.services.exceptions.ObjectNotFoundException;
 
@@ -39,6 +42,12 @@ public class ClientService {
 	}
 
 	public Client getById(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Client> client = repo.findById(id);
 		return client.orElseThrow(() -> new ObjectNotFoundException("Client not found! id: " + Client.class.getName()));
 	}

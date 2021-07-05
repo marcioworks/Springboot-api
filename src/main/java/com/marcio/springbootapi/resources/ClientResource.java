@@ -34,6 +34,7 @@ public class ClientResource {
 	private ClientService clientService;
 
 	@GetMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<List<ClientDto>> list() {
 
 		List<Client> categories = clientService.getClients();
