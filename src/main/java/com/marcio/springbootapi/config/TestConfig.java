@@ -25,14 +25,14 @@ public class TestConfig {
 		return true;
 	}
 	
-//	@Bean
-//	public MailService mailService() {
-//		return new MockMailService();
-//	}
-	
-//	only for test
 	@Bean
 	public MailService mailService() {
-		return new SmtpMailService();
+		return new MockMailService();
 	}
+	
+//	only for test
+//	@Bean
+//	public MailService mailService() {
+//		return new SmtpMailService();
+//	}
 }

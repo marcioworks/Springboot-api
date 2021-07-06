@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.marcio.springbootapi.domain.Client;
 import com.marcio.springbootapi.domain.Pedido;
 
 public abstract class AbstractMailService implements MailService {
@@ -70,6 +71,22 @@ public abstract class AbstractMailService implements MailService {
 		context.setVariable("pedido", obj);
 		return templateEngine.process("email/orderConfirmation", context);
 
+	}
+	
+	@Override
+	public void sendNewPasswordEmail(Client client, String newPass) {
+		SimpleMailMessage sm = PrepareNewPasswordEmail(client, newPass);
+		sendMail(sm);
+	}
+
+	protected SimpleMailMessage PrepareNewPasswordEmail(Client client, String newPass) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(client.getEmail());
+		sm.setFrom(sender);
+		sm.setSubject("new Password request");
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText("New Password: " + newPass);
+		return sm;
 	}
 
 }
