@@ -20,6 +20,7 @@ public class SpringbootApiApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+//		teste
 		s3Service.uploadFile("/home/marcioss/Pictures/foto.jpeg");
 
 	}
