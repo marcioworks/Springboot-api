@@ -1,5 +1,6 @@
 package com.marcio.springbootapi.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.marcio.springbootapi.domain.Address;
 import com.marcio.springbootapi.domain.City;
@@ -36,6 +38,8 @@ public class ClientService {
 	private ClientRepository repo;
 	@Autowired
 	private AddressRepository addressRepo;
+	@Autowired
+	private S3Service s3Service;
 
 	public List<Client> getClients() {
 		return repo.findAll();
@@ -107,6 +111,10 @@ public class ClientService {
 		}
 
 		return cli;
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartfile) {
+		return s3Service.uploadFile(multipartfile);
 	}
 
 }
