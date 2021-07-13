@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;import java.util.stream.Collector;
+import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -30,14 +31,12 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	
+
 	@Column(unique = true)
 	private String email;
 	private String cpfOrCnpj;
 	private Integer type;
-	
-	private String imageUrl;
-	
+
 	@JsonIgnore
 	private String password;
 
@@ -49,9 +48,9 @@ public class Client implements Serializable {
 	private Set<String> phones = new HashSet<>();
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name="profiles")
+	@CollectionTable(name = "profiles")
 	private Set<Integer> profiles = new HashSet<>();
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Pedido> orders = new ArrayList<>();
@@ -95,7 +94,6 @@ public class Client implements Serializable {
 		this.email = email;
 	}
 
-	
 	public String getPassword() {
 		return password;
 	}
@@ -103,6 +101,7 @@ public class Client implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getCpfOrCnpj() {
 		return cpfOrCnpj;
 	}
@@ -134,11 +133,11 @@ public class Client implements Serializable {
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
 	}
-	
-	public Set<Profile> getPerfis(){
+
+	public Set<Profile> getPerfis() {
 		return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
 	}
-	
+
 	public void addProfile(Profile profile) {
 		profiles.add(profile.getCod());
 	}
@@ -175,15 +174,5 @@ public class Client implements Serializable {
 			return false;
 		return true;
 	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	
 
 }
