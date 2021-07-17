@@ -3,16 +3,28 @@ package com.marcio.springbootapi.resources.exceptions;
 import java.io.Serializable;
 
 public class StandardError implements Serializable {
-
 	private static final long serialVersionUID = 1L;
-	private Integer status;
-	private String message;
-	private Long timeStamps;
 	
-	public StandardError(Integer status, String message, Long timeStamps) {
+	private Long timeStamps;
+	private Integer status;
+	private String error;
+	private String message;
+	private String path;
+	
+	public StandardError(Long timeStamps, Integer status, String error, String message, String path) {
 		super();
+		this.timeStamps = timeStamps;
 		this.status = status;
+		this.error = error;
 		this.message = message;
+		this.path = path;
+	}
+
+	public Long getTimeStamps() {
+		return timeStamps;
+	}
+
+	public void setTimeStamps(Long timeStamps) {
 		this.timeStamps = timeStamps;
 	}
 
@@ -24,6 +36,14 @@ public class StandardError implements Serializable {
 		this.status = status;
 	}
 
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -32,13 +52,15 @@ public class StandardError implements Serializable {
 		this.message = message;
 	}
 
-	public Long getTimeStamps() {
-		return timeStamps;
+	public String getPath() {
+		return path;
 	}
 
-	public void setTimeStamps(Long timeStamps) {
-		this.timeStamps = timeStamps;
+	public void setPath(String path) {
+		this.path = path;
 	}
+	
+	
 	
 	
 	
