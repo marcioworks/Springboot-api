@@ -2,7 +2,9 @@ package com.marcio.springbootapi.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -77,6 +79,7 @@ public class DbTestService {
 		Product p9 = new Product(null, "Lamp", 100.0);
 		Product p10 = new Product(null, "Pendent", 180.0);
 		Product p11 = new Product(null, "Shampoo", 90.0);
+		
 
 		cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProducts().addAll(Arrays.asList(p2, p4));
@@ -97,10 +100,21 @@ public class DbTestService {
 		p9.getCategories().addAll(Arrays.asList(cat6));
 		p10.getCategories().addAll(Arrays.asList(cat6));
 		p11.getCategories().addAll(Arrays.asList(cat7));
+		
+		List<Product> produtos = new ArrayList<Product>();
+		 
+		for (int i = 12 ; i < 51; i++ ) {
+			Product produto = new Product(null, "Produto " + i, 10.00);
+			cat1.getProducts().add(produto);
+			produto.getCategories().add(cat1);
+			produtos.add(produto);
+		}
+		
 
 		categoryRepo.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7,cat8));
 		productRepo.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
+		productRepo.saveAll(produtos);
 		State stt1 = new State(null, "Minas Gerais");
 		State stt2 = new State(null, "São Paulo");
 
