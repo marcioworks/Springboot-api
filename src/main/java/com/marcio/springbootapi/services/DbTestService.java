@@ -131,7 +131,7 @@ public class DbTestService {
 		Client cl1 = new Client(null, "Marcio Silva", "marcioadsworks@gmail.com", "13669137017", ClientType.PHYSICALPERSON,pe.encode("123"));
 		cl1.getPhones().addAll(Arrays.asList("85998989898", "85987878787"));
 
-		Client cl2 = new Client(null, "Marcio santos", "marcioworkar@gmail.com", "55161957050", ClientType.PHYSICALPERSON,pe.encode("123"));
+		Client cl2 = new Client(null, "Maria Silva", "marcioworkar@gmail.com", "55161957050", ClientType.PHYSICALPERSON,pe.encode("123"));
 		cl2.addProfile(Profile.ADMIN);
 		cl1.getPhones().addAll(Arrays.asList("85998989898", "85987878787"));
 		
