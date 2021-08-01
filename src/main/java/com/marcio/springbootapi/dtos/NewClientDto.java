@@ -107,11 +107,11 @@ public class NewClientDto implements Serializable {
 	}
 
 	public String getNeighborood() {
-		return neighborood;
+		return neighborhood;
 	}
 
 	public void setNeighborood(String neighborood) {
-		this.neighborood = neighborood;
+		this.neighborhood = neighborood;
 	}
 
 	public String getZipcode() {
