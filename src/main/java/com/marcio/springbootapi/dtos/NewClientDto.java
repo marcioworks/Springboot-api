@@ -36,7 +36,7 @@ public class NewClientDto implements Serializable {
 	@NotEmpty(message = "Field number cant be empty.")
 	private String number;
 	private String complement;
-	private String neighborood;
+	private String neighborhood;
 	@NotEmpty(message = "Field zipcode cant be empty.")
 	private String zipcode;
 
