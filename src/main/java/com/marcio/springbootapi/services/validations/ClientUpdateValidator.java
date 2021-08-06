@@ -39,7 +39,7 @@ public class ClientUpdateValidator implements ConstraintValidator<ClientUpdate, 
 		
 		Client aux = clientRepo.findByEmail(objDto.getEmail());
 		if(aux !=null && !aux.getId().equals(uriId)) {
-			list.add(new FieldMessage("email: ", "  Email already exist"));
+			list.add(new FieldMessage("email", "  Email already exist"));
 		}
 
 		for (FieldMessage e : list) {
