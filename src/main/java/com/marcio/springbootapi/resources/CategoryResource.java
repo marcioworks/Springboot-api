@@ -27,6 +27,10 @@ import com.marcio.springbootapi.domain.Category;
 import com.marcio.springbootapi.dtos.CategoryDto;
 import com.marcio.springbootapi.services.CategoryService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/category")
@@ -35,6 +39,7 @@ public class CategoryResource {
 	@Autowired
 	private CategoryService categoryService;
 
+	@ApiOperation(value="busca por id")
 	@GetMapping
 	public ResponseEntity<List<CategoryDto>> list() {
 
@@ -70,6 +75,9 @@ public class CategoryResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+			@ApiResponse(code = 404, message = "Código inexistente") })
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
